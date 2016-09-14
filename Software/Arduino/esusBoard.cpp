@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    esusBoard.cpp
   * @author  Mace Robotics
-  * @version 0.2
-  * @date    09/09/2016
+  * @version 0.3
+  * @date    14/09/2016
   * @brief   lib for Esus board
   *
  *******************************************************************************/
@@ -62,7 +62,7 @@ static void motors_init(void)
 
 /**********************************************************
  * @brief  motors1_set
- * @param  None
+ * @param  speed (0 to 1023) and direction (DIR_FORWARD or DIR_BACK)
  * @retval None
 **********************************************************/
 void motors1_set(unsigned int speed, boolean direction)
