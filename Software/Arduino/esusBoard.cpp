@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    esusBoard.cpp
   * @author  Mace Robotics
-  * @version 0.1
+  * @version 0.2
   * @date    09/09/2016
   * @brief   lib for Esus board
   *
@@ -35,7 +35,7 @@ void initEsusBoard()
   motors_init();
   
   // init ADC MCP3008
-  MCP3008_init;
+  MCP3008_init();
 }
 
 
@@ -88,7 +88,7 @@ void motors1_set(unsigned int speed, boolean direction)
 
 /**********************************************************
  * @brief  motors2_set
- * @param  None
+ * @param  speed (0 to 1023) and direction (DIR_FORWARD or DIR_BACK)
  * @retval None
 **********************************************************/
 void motors2_set(unsigned int speed, boolean direction)
@@ -129,6 +129,34 @@ static void MCP3008_init()
   pinMode(CS_ADC, OUTPUT);
   digitalWrite(CS_ADC, HIGH);
   
+}
+
+
+/**********************************************************
+ * @brief  MCP3008_read
+ * @param  Channel (0 to 7)
+ * @retval None
+**********************************************************/
+unsigned int MCP3008_read(int channel)
+{
+byte high, low;
+unsigned int data;
+  
+  digitalWrite(CS_ADC, LOW);
+
+  SPI.transfer((channel << 2) + 0b1100000);
+
+  high = SPI.transfer(0);
+  
+  low = SPI.transfer(0);
+  
+  digitalWrite(CS_ADC, HIGH);
+  
+  data = word(high, low);
+
+  data = (data >> 6);// décalage à droite pour obtenir les 10 bits
+
+  return(data);
 }
 
 // end file
