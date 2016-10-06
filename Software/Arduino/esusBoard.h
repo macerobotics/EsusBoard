@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    esusBoard.h
   * @author  Mace Robotics
-  * @version 0.3
-  * @date    14/09/2016
+  * @version 0.5
+  * @date    06/10/2016
   * @brief   lib for Esus board
   *
  *******************************************************************************/
@@ -31,5 +31,16 @@ void motors2_set(unsigned int speed, boolean direction);
 
 // read analog inputs
 unsigned int MCP3008_read(int channel);
+
+// read battery input tension
+float battery_read();
+
+
+void initServerWifi();
+
+// Wifi
+String readStringClientWifi(void);
+
+String Extract_StringWifi(String data);
 
 #endif

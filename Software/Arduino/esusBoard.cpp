@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    esusBoard.cpp
   * @author  Mace Robotics
-  * @version 0.3
-  * @date    14/09/2016
+  * @version 0.5
+  * @date    06/10/2016
   * @brief   lib for Esus board
   *
  *******************************************************************************/
@@ -11,6 +11,8 @@
 
 #include <Arduino.h>
 #include "esusBoard.h"
+
+WiFiServer server(80);
 
 static void motors_init(void);
 static void MCP3008_init();
@@ -36,6 +38,9 @@ void initEsusBoard()
   
   // init ADC MCP3008
   MCP3008_init();
+  
+  // init analog input (battery input)
+  pinMode(A0, INPUT);
 }
 
 
@@ -157,6 +162,89 @@ unsigned int data;
   data = (data >> 6);// décalage à droite pour obtenir les 10 bits
 
   return(data);
+}
+
+/**********************************************************
+ * @brief  battery_read
+ * @param  None
+ * @retval None
+**********************************************************/
+float battery_read()
+{
+unsigned int data_adc=0;
+float Battery_tension=0;
+
+  // read analog digital converter
+  data_adc = (unsigned int) analogRead(A0);
+  
+ Battery_tension = (float)((data_adc*3.1)/1024.0);
+ 
+ Battery_tension = (float)(Battery_tension*11.0 + 1.0);
+ 
+ return(Battery_tension);
+  
+}
+
+/**********************************************************
+ * @brief  initServerWifi
+ * @param  None
+ * @retval None
+**********************************************************/
+void initServerWifi()
+{
+  server.begin();
+}
+
+
+/**********************************************************
+ * @brief  readStringClientWifi
+ * @param  None
+ * @retval None
+**********************************************************/
+String readStringClientWifi(void)
+{
+WiFiClient client = server.available();
+
+  while (client != true)
+  {
+    client = server.available();
+  }
+  
+  return( String(client.readStringUntil('\r')) );
+}
+
+/**********************************************************
+ * @brief  Extract_StringWifi
+ * @param  None
+ * @retval None
+**********************************************************/
+String Extract_StringWifi(String data)
+{
+String extract;
+char cara = 'Z';
+unsigned int counter = 0;
+
+ extract = data.substring(5);
+
+  while(cara != '/')
+  {
+    cara = extract[counter];
+    counter++;
+
+    //error
+    if(counter > 100)
+      cara = '/';
+  }
+
+  counter = counter - 1;
+
+  // delete HTTP (5 char)
+  counter = counter - 5;
+
+  extract = extract.substring(0,counter);
+
+  return(extract);
+
 }
 
 // end file
