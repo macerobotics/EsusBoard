@@ -1,0 +1,23 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="servo_move" id="2" inline="false" x="41" y="9">
+    <value name="PIN">
+      <block type="math_number" id="3">
+        <field name="NUM">6</field>
+      </block>
+    </value>
+    <value name="DEGREE">
+      <block type="base_map" id="28">
+        <value name="NUM">
+          <block type="inout_analog_read_validator" id="DtXa~88{J:U]mW%?-yOa">
+            <field name="PIN">A1</field>
+          </block>
+        </value>
+        <value name="DMAX">
+          <block type="math_number" id="30">
+            <field name="NUM">180</field>
+          </block>
+        </value>
+      </block>
+    </value>
+  </block>
+</xml>
