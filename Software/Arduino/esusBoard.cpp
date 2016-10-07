@@ -13,6 +13,7 @@
 #include "esusBoard.h"
 
 WiFiServer server(80);
+WiFiClient client;
 
 static void motors_init(void);
 static void MCP3008_init();
@@ -185,6 +186,7 @@ float Battery_tension=0;
   
 }
 
+
 /**********************************************************
  * @brief  initServerWifi
  * @param  None
@@ -197,18 +199,42 @@ void initServerWifi()
 
 
 /**********************************************************
+ * @brief  dataWifiAvailable
+ * @param  None
+ * @retval None
+**********************************************************/
+boolean dataWifiAvailable(void)
+{
+boolean available;
+
+  client = server.available();
+
+  if(client == true)
+  {
+    available = true;
+  }
+  else
+  {
+   available = false; 
+  }
+  
+  return(available);
+}
+
+
+/**********************************************************
  * @brief  readStringClientWifi
  * @param  None
  * @retval None
 **********************************************************/
 String readStringClientWifi(void)
 {
-WiFiClient client = server.available();
+  //client = server.available();
 
-  while (client != true)
+  /*while (client != true)
   {
     client = server.available();
-  }
+  }*/
   
   return( String(client.readStringUntil('\r')) );
 }

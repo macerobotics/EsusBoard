@@ -89,26 +89,27 @@ Blockly.Blocks['EsusBoard_analog'] = {
   }
 };
 
-Blockly.Blocks['EsusBoard_WifiClientAvailable'] = {
+ Blockly.Blocks['EsusBoard_WifiConfigIP'] = {
   init: function() {
     this.setColour("#00975D");
 	this.setHelpUrl('http://www.macerobotics.com');
-	this.appendDummyInput("")
-	    .appendField(Blockly.Msg.WIFI_CLIENT_AV);
-    this.setInputsInline(true);
-    this.setOutput(true, "Boolean");
-  }
-};
-
- Blockly.Blocks['EsusBoard_WifiClientWait'] = {
-  init: function() {
-    this.setColour("#00975D");
-	this.setHelpUrl('http://www.macerobotics.com');
-	this.setInputsInline(true);
-    this.appendDummyInput("")
-	    .appendField(Blockly.Msg.WIFI_CLIENT_WAIT)
+    this.appendValueInput("Text_ip1")
+		.setCheck('Number')
+	    .setAlign(Blockly.ALIGN_RIGHT)
+        .appendField(Blockly.Msg.WIFI_IP);
+    this.appendValueInput("Text_ip2")
+		.setCheck('Number')
+	    .setAlign(Blockly.ALIGN_RIGHT)
+	this.appendValueInput("Text_ip3")
+		.setCheck('Number')
+	    .setAlign(Blockly.ALIGN_RIGHT)
+	this.appendValueInput("Text_ip4")
+		.setCheck('Number')
+	    .setAlign(Blockly.ALIGN_RIGHT)
+    this.setInputsInline(false);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
+    this.setTooltip('');
   }
 };
 
@@ -123,14 +124,27 @@ Blockly.Blocks['EsusBoard_ReadStream'] = {
   }
 };
 
-Blockly.Blocks['EsusBoard_indexOf'] = {
+Blockly.Blocks['EsusBoard_dataWifiAvailable'] = {
+  init: function() {
+    this.setColour("#00975D");
+	this.setHelpUrl('http://www.macerobotics.com');
+	this.appendDummyInput("")
+	    .appendField(Blockly.Msg.WIFI_DATA_AVAILABLE);
+	this.setOutput(true, "Boolean");
+	this.setTooltip('');
+  }
+};
+
+Blockly.Blocks['EsusBoard_WifiContain'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.TEXT_APPEND_HELPURL);
-    this.setColour(Blockly.Blocks.texts.HUE);
-    this.appendValueInput('TEXT')
+    this.setColour("#00975D");
+    this.appendDummyInput("")
+        .appendField(Blockly.Msg.WIFI_CONTAIN);
+    this.appendDummyInput("")
         .appendField(new Blockly.FieldVariable(
         Blockly.Msg.TEXT_APPEND_VARIABLE), 'VAR')
-        .appendField(Blockly.Msg.WIFI_INDEXOF);
+        .appendField(Blockly.Msg.WIFI_CONTAIN2);
     this.setPreviousStatement(false);
     this.setNextStatement(false);
     // Assign 'this' to a variable for use in the tooltip closure below.
@@ -139,7 +153,7 @@ Blockly.Blocks['EsusBoard_indexOf'] = {
       return Blockly.Msg.TEXT_APPEND_TOOLTIP.replace('%1',
           thisBlock.getFieldValue('VAR'));
     });
-    this.setOutput(true, "Number");
+    this.setOutput(true, 'String');
   }
 }
 

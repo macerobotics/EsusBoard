@@ -1589,15 +1589,17 @@
 					</shadow>
 				</value>
 		</block>
-		<block type="EsusBoard_WifiClientAvailable"></block>
-		<block type="EsusBoard_WifiClientWait"></block>
+		<block type="EsusBoard_WifiConfigIP">
+				<value name="Text_IP1">
+					<shadow type="NUM">
+						<field name="NUM"></field>
+					</shadow>
+				</value>
+		</block>
 		<block type="EsusBoard_ReadStream"></block>
 		<block type="conversion_toString"></block>
-		<block type="EsusBoard_indexOf">
-			<value name="TEXT">
-				<shadow type="text"></shadow>
-			</value>
-		</block>
+		<block type="EsusBoard_WifiContain"></block>
+		<block type="EsusBoard_dataWifiAvailable"></block>
 	</category>
 </toolbox>
 

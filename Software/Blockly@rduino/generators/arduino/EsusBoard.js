@@ -10,8 +10,8 @@ goog.require('Blockly.Blocks');
 
 
 Blockly.Arduino['EsusBoard_init'] = function() {
-  Blockly.Arduino.definitions_['define_ss'] = '#include <esusBoard.h>\n';
-  Blockly.Arduino.setups_['serial_begin'] = 'initEsusBoard();';
+  Blockly.Arduino.definitions_['define_ss'] = '#include <esusBoard.h>';
+  Blockly.Arduino.setups_['esus_init'] = 'initEsusBoard();';
   return "";
 };
 
@@ -36,29 +36,44 @@ Blockly.Arduino['EsusBoard_analog'] = function() {
 };
 
 Blockly.Arduino['EsusBoard_WifiConfig'] = function() {
-  Blockly.Arduino.definitions_['define_wifi'] = '#include <ESP8266WiFi.h>\n';
-  Blockly.Arduino.definitions_['define_server'] = 'WiFiServer server(80);';
-  Blockly.Arduino.definitions_['client_begin'] = "WiFiClient client;";
+  Blockly.Arduino.definitions_['define_wifi'] = '#include <ESP8266WiFi.h>';
+  //Blockly.Arduino.definitions_['client_begin'] = "WiFiClient client;";
   var value_ssid = Blockly.Arduino.valueToCode(this, 'Text_ssid', Blockly.Arduino.ORDER_ATOMIC) || '0';
   var value_password = Blockly.Arduino.valueToCode(this, 'Text_password', Blockly.Arduino.ORDER_ATOMIC) || '0';
   var code = 'WiFi.begin(' + value_ssid + ', ' + value_password + ');\n';
   Blockly.Arduino.setups_['wifi'] = code;
-  Blockly.Arduino.setups_['server_begin'] = "server.begin();";
-  return 'WiFiClient client = server.available();\n';
+  Blockly.Arduino.setups_['server_begin'] = "initServerWifi();";
+  return '\n';
 };
 
-Blockly.Arduino['EsusBoard_WifiClientAvailable'] = function() {
+Blockly.Arduino['EsusBoard_WifiConfigIP'] = function() {
+  var adr1 = Blockly.Arduino.valueToCode(this, 'Text_ip1', Blockly.Arduino.ORDER_ATOMIC);
+  var adr2 = Blockly.Arduino.valueToCode(this, 'Text_ip2', Blockly.Arduino.ORDER_ATOMIC);
+  var adr3 = Blockly.Arduino.valueToCode(this, 'Text_ip3', Blockly.Arduino.ORDER_ATOMIC);
+  var adr4 = Blockly.Arduino.valueToCode(this, 'Text_ip4', Blockly.Arduino.ORDER_ATOMIC);
+  Blockly.Arduino.setups_['esus_WifiConfigIP'] = 'WiFi.config(ip, gateway, subnet);\n';
+  Blockly.Arduino.definitions_['define_ip'] = 'IPAddress ip('+ adr1 +', '+ adr2 +', '+ adr3 +', '+ adr4 +');';
+  Blockly.Arduino.definitions_['define_gateway'] = 'IPAddress gateway('+ adr1 +','+ adr2 +','+ adr3 +',1);';
+  Blockly.Arduino.definitions_['define_subnet'] = 'IPAddress subnet(255,255,255,0);';
+  return "";
+};
+/*Blockly.Arduino['EsusBoard_WifiClientAvailable'] = function() {
   var code = 'client != true';
   return [code, Blockly.Arduino.ORDER_ATOMIC];
-};
+};*/
 
-Blockly.Arduino['EsusBoard_WifiClientWait'] = function() {
+/*Blockly.Arduino['EsusBoard_WifiClientWait'] = function() {
   return 'client = server.available();\n';
-};
+};*/
 
 
 Blockly.Arduino['EsusBoard_ReadStream'] = function() {
-  var code = "client.readStringUntil('\\r')";
+  var code = "readStringClientWifi()";
+  return [code, Blockly.Arduino.ORDER_ATOMIC];
+};
+
+Blockly.Arduino['EsusBoard_dataWifiAvailable'] = function() {
+  var code = "dataWifiAvailable()";
   return [code, Blockly.Arduino.ORDER_ATOMIC];
 };
 
@@ -68,19 +83,15 @@ Blockly.Arduino['conversion_toString'] = function(block) {
   return [code, Blockly.Arduino.ORDER_ATOMIC];
 }
 
-Blockly.Arduino['EsusBoard_indexOf'] = function(block) {
-  // Append to a variable in place.
+Blockly.Arduino['EsusBoard_WifiContain'] = function(block) {
   var varName = Blockly.Arduino.variableDB_.getName(
       block.getFieldValue('VAR'), Blockly.Variables.NAME_TYPE);
-  var argument0 = Blockly.Arduino.valueToCode(block, 'TEXT',
-      Blockly.Arduino.ORDER_UNARY_POSTFIX);
-  if (argument0 == '') {
-    argument0 = '""';
+  var code = '';
+  if (varName == '') {
+    code = '""';
   } else {
-    argument0 = 'indexOf(' + argument0 + ')';
+    code = 'Extract_StringWifi(' + varName + ')';
   }
-  //return varName + '.' + argument0 + ';\n';
-  var code = varName + '.' + argument0 + '';
   return [code, Blockly.Arduino.ORDER_ATOMIC];
 };
 
