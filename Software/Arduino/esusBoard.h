@@ -39,6 +39,9 @@ float battery_read();
 void initServerWifi();
 
 // Wifi
+boolean dataWifiAvailable(void);
+
+// Wifi
 String readStringClientWifi(void);
 
 String Extract_StringWifi(String data);
