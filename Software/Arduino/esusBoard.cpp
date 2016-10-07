@@ -206,8 +206,16 @@ void initServerWifi()
 boolean dataWifiAvailable(void)
 {
 boolean available;
+int c=0;
 
   client = server.available();
+  
+  while((client != true)and(c < 100))
+  {
+    client = server.available();
+    delay(50);
+	c++;
+  }
 
   if(client == true)
   {
