@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    esusBoard.cpp
   * @author  Mace Robotics
-  * @version 0.5
-  * @date    06/10/2016
+  * @version 0.6
+  * @date    27/10/2016
   * @brief   lib for Esus board
   *
  *******************************************************************************/
@@ -198,6 +198,7 @@ void initServerWifi()
 }
 
 
+
 /**********************************************************
  * @brief  dataWifiAvailable
  * @param  None
@@ -209,6 +210,7 @@ boolean available;
 int c=0;
 
   client = server.available();
+  
   
   while((client != true)and(c < 100))
   {
@@ -237,14 +239,25 @@ int c=0;
 **********************************************************/
 String readStringClientWifi(void)
 {
-  //client = server.available();
 
-  /*while (client != true)
-  {
-    client = server.available();
-  }*/
-  
   return( String(client.readStringUntil('\r')) );
+
+}
+
+
+/**********************************************************
+ * @brief  sendStringClientWifi
+ * @param  None
+ * @retval None
+**********************************************************/
+void sendStringClientWifi(String data)
+{
+  client.print(data);
+}
+
+void sendFloatClientWifi(float data)
+{
+  client.print(data);
 }
 
 /**********************************************************
@@ -280,5 +293,8 @@ unsigned int counter = 0;
   return(extract);
 
 }
+
+
+
 
 // end file
