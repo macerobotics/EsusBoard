@@ -28,6 +28,14 @@
 #define A4 4
 #define A5 5
 
+#define M1_IN1 16   
+#define M1_IN2 5     
+
+// motor 2
+#define M2_IN1 4  
+#define M2_IN2 0
+
+
 // init esus board
 void initEsusBoard();
 

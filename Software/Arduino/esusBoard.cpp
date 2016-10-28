@@ -18,14 +18,6 @@ WiFiClient client;
 static void motors_init(void);
 static void MCP3008_init();
 
-// motor 1
-int M1_IN1 = 16;   
-int M1_IN2 = 5;     
-
-// motor 2
-int M2_IN1 = 4;   
-int M2_IN2 = 0; 
-
 
 /**********************************************************
  * @brief  initEsusBoard
@@ -36,12 +28,10 @@ void initEsusBoard()
 {
   // init H-bridge
   motors_init();
-  
+ 
   // init ADC MCP3008
   MCP3008_init();
-  
-  // init analog input (battery input)
-  pinMode(A0, INPUT);
+ 
 }
 
 
@@ -52,17 +42,18 @@ void initEsusBoard()
 **********************************************************/
 static void motors_init(void)
 {
-  pinMode(M1_IN1, OUTPUT);      
-  pinMode(M1_IN2, OUTPUT);      
+  pinMode(16, OUTPUT);      
+  pinMode(5, OUTPUT);      
 
-  pinMode(M2_IN1, OUTPUT);      
-  pinMode(M2_IN2, OUTPUT);     
+  pinMode(4, OUTPUT);      
+  pinMode(0, OUTPUT);     
 
-  analogWrite(M1_IN1, 0);  
-  analogWrite(M1_IN2, 0);  
+  analogWrite(16, 0);  
+  analogWrite(5, 0);  
 
-  analogWrite(M2_IN1, 0);  
-  analogWrite(M2_IN2, 0); 
+  analogWrite(4, 0);  
+  analogWrite(0, 1); 
+  
 }
 
 
@@ -175,12 +166,18 @@ float battery_read()
 unsigned int data_adc=0;
 float Battery_tension=0;
 
+  // init analog input (battery input)
+  pinMode(A0, INPUT);
+
   // read analog digital converter
   data_adc = (unsigned int) analogRead(A0);
   
  Battery_tension = (float)((data_adc*3.1)/1024.0);
  
  Battery_tension = (float)(Battery_tension*11.0 + 1.0);
+ 
+ // init analog input (battery input)
+  pinMode(A0, OUTPUT);
  
  return(Battery_tension);
   
