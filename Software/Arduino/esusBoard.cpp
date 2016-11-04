@@ -12,7 +12,7 @@
 #include <Arduino.h>
 #include "esusBoard.h"
 
-WiFiServer server(80);
+WiFiServer esus_wifi_server(80);
 WiFiClient client;
 
 static void motors_init(void);
@@ -191,7 +191,7 @@ float Battery_tension=0;
 **********************************************************/
 void initServerWifi()
 {
-  server.begin();
+  esus_wifi_server.begin();
 }
 
 
@@ -206,12 +206,12 @@ boolean dataWifiAvailable(void)
 boolean available;
 int c=0;
 
-  client = server.available();
+  client = esus_wifi_server.available();
   
   
   while((client != true)and(c < 100))
   {
-    client = server.available();
+    client = esus_wifi_server.available();
     delay(50);
 	c++;
   }
