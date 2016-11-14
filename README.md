@@ -1,9 +1,9 @@
-# EsusBoard
+# Esus Board
 
 This is the official documentation for the Esus Board.
 
 Hardware : 
-- Schematic
+- Schematic (PDF)
 
 Software : 
 - Arduino library
