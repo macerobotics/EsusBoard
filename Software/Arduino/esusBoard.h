@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    esusBoard.h
   * @author  Mace Robotics
-  * @version 0.6
-  * @date    27/10/2016
+  * @version 0.7
+  * @date    24/11/2016
   * @brief   lib for Esus board
   *
  *******************************************************************************/
@@ -27,6 +27,8 @@
 #define A3 3
 #define A4 4
 #define A5 5
+#define I2 6
+#define I3 7
 
 #define M1_IN1 16   
 #define M1_IN2 5     
@@ -34,7 +36,6 @@
 // motor 2
 #define M2_IN1 4  
 #define M2_IN2 0
-
 
 // init esus board
 void initEsusBoard();
@@ -49,9 +50,11 @@ unsigned int MCP3008_read(int channel);
 // read battery input tension
 float battery_read();
 
+/*************************/
+/**** Wifi functions ****/
 
+// init wifi server
 void initServerWifi();
-
 
 // Wifi
 boolean dataWifiAvailable(void);
