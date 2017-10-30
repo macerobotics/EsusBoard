@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    esusBoard.cpp
   * @author  Mace Robotics
-  * @version 0.7
-  * @date    24/11/2016
+  * @version 0.9
+  * @date    30/10/2017
   * @brief   lib for Esus board
   *
  *******************************************************************************/
@@ -15,8 +15,6 @@
 WiFiServer esus_wifi_server(80);
 WiFiClient client;
 
-static void motors_init(void);
-static void MCP3008_init();
 
 
 /**********************************************************
@@ -40,7 +38,7 @@ void initEsusBoard()
  * @param  None
  * @retval None
 **********************************************************/
-static void motors_init(void)
+void motors_init(void)
 {
   pinMode(16, OUTPUT);      
   pinMode(5, OUTPUT);      
@@ -110,11 +108,23 @@ void motors2_set(unsigned int speed, boolean direction)
 
 
 /**********************************************************
+ * @brief  motors_stop
+ * @param  none
+ * @retval None
+**********************************************************/
+void motors_stop(void)
+{
+  motors1_set(0,0);
+  motors2_set(0,0);
+}
+
+
+/**********************************************************
  * @brief  MCP3008_init
  * @param  None
  * @retval None
 **********************************************************/
-static void MCP3008_init()
+void MCP3008_init()
 {
   // Initialisation du bus SPI
   SPI.begin();

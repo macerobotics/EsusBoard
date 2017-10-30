@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    esusBoard.h
   * @author  Mace Robotics
-  * @version 0.7
-  * @date    24/11/2016
+  * @version 0.9
+  * @date    30/10/2017
   * @brief   lib for Esus board
   *
  *******************************************************************************/
@@ -43,6 +43,9 @@ void initEsusBoard();
 // motors
 void motors1_set(unsigned int speed, boolean direction);
 void motors2_set(unsigned int speed, boolean direction);
+void motors_stop(void);
+void motors_init(void);
+void MCP3008_init();
 
 // read analog inputs
 unsigned int MCP3008_read(int channel);
